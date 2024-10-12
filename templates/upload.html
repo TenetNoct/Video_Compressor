@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Compressor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+        }
+        h1 {
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            font-weight: bold;
+        }
+        select, input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Video Compressor</h1>
+        <form action="/" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="file">Select Video Files:</label>
+                <input type="file" name="file" id="file" accept="video/*" multiple required>
+            </div>
+
+            <!-- Bitrate Options -->
+            <div class="form-group">
+                <label for="bitrate">Select Bitrate:</label>
+                <select name="bitrate" id="bitrate">
+                    <optgroup label="Baixa Qualidade">
+                        <option value="500k">500 kbps</option>
+                        <option value="1000k">1000 kbps</option>
+                    </optgroup>
+                    <optgroup label="Média Qualidade">
+                        <option value="2000k">2000 kbps</option>
+                        <option value="3000k">3000 kbps</option>
+                        <option value="4000k">4000 kbps</option>
+                    </optgroup>
+                    <optgroup label="Alta Qualidade">
+                        <option value="5000k">5000 kbps</option>
+                        <option value="6000k">6000 kbps</option>
+                        <option value="8000k">8000 kbps</option>
+                        <option value="10000k">10000 kbps</option>
+                    </optgroup>
+                    <option value="custom">Custom</option>
+                </select>
+                <input type="number" name="custom_bitrate" id="custom_bitrate" placeholder="Enter custom bitrate" style="display:none;">
+            </div>
+
+            <!-- Resolução Options -->
+            <div class="form-group">
+                <label for="resolution">Select Resolution:</label>
+                <select name="resolution" id="resolution">
+                    <option value="426x240">240p (426x240)</option>
+                    <option value="640x360">360p (640x360)</option>
+                    <option value="854x480">480p (854x480)</option>
+                    <option value="1280x720">720p (1280x720)</option>
+                    <option value="1920x1080">1080p (1920x1080)</option>
+                    <option value="2560x1440">1440p (2560x1440)</option>
+                    <option value="3840x2160">2160p (3840x2160)</option>
+                    <option value="custom">Custom</option>
+                </select>
+                <div id="custom_resolution" style="display:none;">
+                    <input type="number" name="custom_width" placeholder="Width" min="100">
+                    <input type="number" name="custom_height" placeholder="Height" min="100">
+                </div>
+            </div>
+
+            <!-- Preset Options (Nível de Compressão) -->
+            <div class="form-group">
+                <label for="compression_preset">Select Compression Preset:</label>
+                <select name="compression_preset" id="compression_preset">
+                    <option value="fast">Fast (Compressão Alta, Menor Qualidade)</option>
+                    <option value="balanced">Balanced (Compressão Balanceada)</option>
+                    <option value="quality">Quality (Compressão Média, Melhor Qualidade)</option>
+                    <option value="high_quality">High Quality (Compressão Leve, Alta Qualidade)</option>
+                    <option value="custom">Custom</option>
+                </select>
+            </div>
+
+            <!-- Preset de Qualidade NVENC -->
+            <div class="form-group">
+                <label for="nvenc_preset">Select NVENC Quality Preset:</label>
+                <select name="nvenc_preset" id="nvenc_preset">
+                    <option value="p1">P1 (Melhor Qualidade)</option>
+                    <option value="p2">P2</option>
+                    <option value="p3">P3</option>
+                    <option value="p4">P4</option>
+                    <option value="p5">P5</option>
+                    <option value="p6">P6</option>
+                    <option value="p7">P7 (Melhor Performance)</option>
+                </select>
+            </div>
+
+            <button type="submit">Compress Video</button>
+        </form>
+    </div>
+
+    <script>
+        // Mostrar campo de bitrate personalizado
+        document.getElementById('bitrate').addEventListener('change', function() {
+            if (this.value === 'custom') {
+                document.getElementById('custom_bitrate').style.display = 'block';
+            } else {
+                document.getElementById('custom_bitrate').style.display = 'none';
+            }
+        });
+
+        // Mostrar campos de resolução personalizada
+        document.getElementById('resolution').addEventListener('change', function() {
+            if (this.value === 'custom') {
+                document.getElementById('custom_resolution').style.display = 'block';
+            } else {
+                document.getElementById('custom_resolution').style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
